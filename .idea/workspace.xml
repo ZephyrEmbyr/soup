@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6f670c27-07e7-475f-afdf-104ba005d3a3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Amount.py" beforeDir="false" afterPath="$PROJECT_DIR$/Amount.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ingredient.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ingredient.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,14 +31,15 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="227" />
+          <entry key="py" value="311" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="227" />
+          <entry key="Python" value="311" />
         </counts>
       </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts" />
     </session>
   </component>
   <component name="FileEditorManager">
@@ -45,10 +47,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Ingredient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="60">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
               <folding>
-                <marker date="1536160080551" expanded="true" signature="17:22" ph="..." />
+                <marker date="1536160624127" expanded="true" signature="17:22" ph="..." />
               </folding>
             </state>
           </provider>
@@ -57,11 +59,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Amount.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="120">
+              <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
               <folding>
-                <marker date="1536160465579" expanded="true" signature="13:14" ph="..." />
-                <marker date="1536160465579" expanded="true" signature="13:18" ph="..." />
+                <marker date="1536160730226" expanded="true" signature="13:14" ph="..." />
+                <marker date="1536160730226" expanded="true" signature="13:18" ph="..." />
               </folding>
             </state>
           </provider>
@@ -87,9 +89,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="6" />
+    <option name="x" value="7" />
     <option name="y" value="23" />
-    <option name="width" value="872" />
+    <option name="width" value="808" />
     <option name="height" value="737" />
   </component>
   <component name="ProjectView">
@@ -143,11 +145,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="6" y="23" width="872" height="737" extended-state="0" />
+    <frame x="7" y="23" width="808" height="737" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26987952" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2924282" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
@@ -178,21 +180,21 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Ingredient.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="60">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
           <folding>
-            <marker date="1536160080551" expanded="true" signature="17:22" ph="..." />
+            <marker date="1536160624127" expanded="true" signature="17:22" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Amount.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="120">
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
           <folding>
-            <marker date="1536160465579" expanded="true" signature="13:14" ph="..." />
-            <marker date="1536160465579" expanded="true" signature="13:18" ph="..." />
+            <marker date="1536160730226" expanded="true" signature="13:14" ph="..." />
+            <marker date="1536160730226" expanded="true" signature="13:18" ph="..." />
           </folding>
         </state>
       </provider>
