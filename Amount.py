@@ -9,3 +9,6 @@ class Amount:
 
     def get_quantity(self):
         return self.quantity
+
+    def __str__(self):
+        return (str(self.quantity) + " " + str(self.unit))

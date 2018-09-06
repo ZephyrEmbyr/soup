@@ -45,3 +45,9 @@ class Recipe:
 
         if new_total_weight == 100:
             print('Success!')
+
+    def __str__(self):
+        temp = ""
+        for ingredient in self.ingredients:
+            temp = temp + str(ingredient) + "\n"
+        return temp;

@@ -1,11 +1,11 @@
 import glob
 import numpy as np
 import random as rand
-
-
+from Amount import *
+from recipe import *
+from Ingredient import *
 txt_files = glob.glob("input/*.txt")
 
-print(len(txt_files))
 
 recipes = []
 
@@ -16,29 +16,33 @@ for i in range(len(txt_files)):
         for line in temp:
             line_split = line.split(" ", 2)
             line_split[2] = line_split[2][:-1]
-            amount_temp = Amount(line[0],line[1])
-            ingredient_temp.append(Ingredient(line[3],amount_temp))
-        recipes.append(Recipe(ingredient_temp))
-
-# recipes_split = []
-#
-# for recipe in recipes:
-#     recipe_temp = []
-#     for line in recipe:
-#         line_split = line.split(" ", 2)
-#         line_split[2] = line_split[2][:-1]
-#         recipe_temp.append(line_split)
-#     recipes_split.append(recipe_temp)
-#
-# recipes_objects = []
-#
-# for i in range(len(recipes_split)):
-#     recip
-
-def selection()
+            amount_temp = Amount(float(line_split[0]),line_split[1])
+            ingredient_temp.append(Ingredient(line_split[2],amount_temp))
+        recipe_temp = Recipe(ingredient_temp)
+        recipes.append(recipe_temp)
 
 """
+The selection_probability_array function takes an array of recipes and generates
+an array of selection probabilities that correspond to the recipes based on the
+aesthetic filter of recipe size.
+    Input:
+        breeding_pool -> the array of parent recipes
+    Output:
+        probs_array -> the array of each recipe's probability of being selected
+"""
+def selection_probability_array(breeding_pool)
+    probs_array = []
+    num_ingredients = 0
+    for x in range(breeding_pool):
+        num_ingredients += len(breeding_pool[x])
 
+    for x in range(breeding_pool):
+        probs_array.append(float(len(breeding_pool[x]) / num_ingredients))
+
+    return probs_array
+
+
+"""
 The produce_new_generation function takes an array of recipes and generates an
 new generation of offspring recipes based on the previous generation
 (breeding_pool).
@@ -66,10 +70,10 @@ The cross_over function takes two recipes and generates an offspring. The offspr
 is created by picking random a pivot point in each parent and then randomly combini-
 ng a subset from each parent bsed on their respective pivot point.
     Inputs:
-            recipe1 -> the first parent recipe
-            recipe2 -> the second parent recipe
+        recipe1 -> the first parent recipe
+        recipe2 -> the second parent recipe
     Output:
-            crossed_recipe -> the child recipe
+        crossed_recipe -> the child recipe
 """
 def cross_over(recipe1, recipe2):
     pivot1 = rand.randInt(1, len(recipe1)-1)      # creating random pivot indices
