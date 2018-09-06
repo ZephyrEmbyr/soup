@@ -29,3 +29,22 @@ class Recipe:
         del self.ingredients[random_index]
 
         return
+
+
+    # set weight to 100 oz
+    def normalize_weights(self):
+        oz_counter = 0
+
+        for (ingredient in self.ingredients):
+            oz_counter += ingredient.amount.get_quantity
+
+        scale = 100 / oz_counter
+
+        new_total_weight = 0
+        for (ingredient in self.ingredients):
+            prev_quantity = ingredient.amount.get_quantity
+            self.ingredients.amount.replace_quantity(scale * prev_quantity)
+            new_total_weight += scale * prev_quantity
+
+        if (new_total_weight == 100):
+            print 'Success!'
