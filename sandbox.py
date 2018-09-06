@@ -37,3 +37,5 @@ for recipe in recipes:
 # print(temp3)
 #
 # print(recipes[0])
+
+print(recipes[3].ingredients[0])
