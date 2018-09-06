@@ -5,4 +5,3 @@ class Amount:
 
     def replace_quantity(self, new_quantity):
         self.quantity = new_quantity
-
