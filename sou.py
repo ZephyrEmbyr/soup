@@ -10,7 +10,14 @@ recipes = []
 
 for i in range(len(txt_files)):
     with open(txt_files[i]) as f:
-        recipes.append(f.readlines())
+        temp = f.readlines()
+        ingredient_temp = []
+        for line in temp:
+            line_split = line.split(" ", 2)
+            line_split[2] = line_split[2][:-1]
+            amount_temp = Amount(line[0],line[1])
+            ingredient_temp.append(Ingredient(line[3],amount_temp))
+        recipes.append(Recipe(ingredient_temp))
 
 recipes_split = []
 
@@ -22,29 +29,40 @@ for recipe in recipes:
         recipe_temp.append(line_split)
     recipes_split.append(recipe_temp)
 
+recipes_objects = []
 
-for recipe in recipes_split:
-    print(recipe)
-    print()
-
-
-
-def produce_new_generation(breeding_pool):
-    pool_size = len(breeding_pool)
-    parent1 = rand.randInt(0, len[breeding_pool] - 1)
-    parent2 = rand.randInt(0, len[breeding_pool] - 1)
-    new_generation = []
-    iter = pool_size
-    while(it)
-
-
+for i in range(len(recipes_split)):
+    recip
 
 
 
 """
-The cross_over funciton takes two recipes and generates an offspring. The offspring
-is created by picking random pivot points in each parent and then randomly combini-
-ng
+The produce_new_generation function takes an array of recipes and generates an
+new generation of offspring recipes based on the previous generation
+(breeding_pool).
+    Input:
+        breeding_pool -> the array of parent recipes
+    Output:
+        new_generation -> the array of offspring recipes
+"""
+def produce_new_generation(breeding_pool):
+    pool_size = len(breeding_pool)
+    new_generation = []
+    iter = pool_size
+    while iter > 0:
+        parent1 = rand.randInt(0, len[breeding_pool] - 1) # no selection is being done
+        parent2 = rand.randInt(0, len[breeding_pool] - 1) # this is random selection
+        new_generation.append(cross_over(parent1, parent2))
+        iter--
+
+    return new_generation
+
+
+
+"""
+The cross_over function takes two recipes and generates an offspring. The offspring
+is created by picking random a pivot point in each parent and then randomly combini-
+ng a subset from each parent bsed on their respective pivot point.
     Inputs:
             recipe1 -> the first parent recipe
             recipe2 -> the second parent recipe

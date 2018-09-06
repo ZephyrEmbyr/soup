@@ -10,19 +10,13 @@ recipes = []
 
 for i in range(len(txt_files)):
     with open(txt_files[i]) as f:
-        recipes.append(f.readlines())
+        temp = f.readlines()
+        ingredient_temp = []
+        for line in temp:
+            line_split = line.split(" ", 2)
+            line_split[2] = line_split[2][:-1]
+            amount_temp = Amount(line[0],line[1])
+            ingredient_temp.append(Ingredient(line[3],amount_temp))
+        recipes.append(Recipe(ingredient_temp))
 
-recipes_split = []
-
-for recipe in recipes:
-    recipe_temp = []
-    for line in recipe:
-        line_split = line.split(" ", 2)
-        line_split[2] = line_split[2][:-1]
-        recipe_temp.append(line_split)
-    recipes_split.append(recipe_temp)
-
-
-for recipe in recipes_split:
-    print(recipe)
-    print()
+print(recipes)
