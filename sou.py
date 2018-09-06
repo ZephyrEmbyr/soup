@@ -2,6 +2,7 @@ import glob
 import numpy as np
 import random as rand
 
+
 txt_files = glob.glob("input/*.txt")
 
 print(len(txt_files))
@@ -19,24 +20,25 @@ for i in range(len(txt_files)):
             ingredient_temp.append(Ingredient(line[3],amount_temp))
         recipes.append(Recipe(ingredient_temp))
 
-recipes_split = []
+# recipes_split = []
+#
+# for recipe in recipes:
+#     recipe_temp = []
+#     for line in recipe:
+#         line_split = line.split(" ", 2)
+#         line_split[2] = line_split[2][:-1]
+#         recipe_temp.append(line_split)
+#     recipes_split.append(recipe_temp)
+#
+# recipes_objects = []
+#
+# for i in range(len(recipes_split)):
+#     recip
 
-for recipe in recipes:
-    recipe_temp = []
-    for line in recipe:
-        line_split = line.split(" ", 2)
-        line_split[2] = line_split[2][:-1]
-        recipe_temp.append(line_split)
-    recipes_split.append(recipe_temp)
-
-recipes_objects = []
-
-for i in range(len(recipes_split)):
-    recip
-
-
+def selection()
 
 """
+
 The produce_new_generation function takes an array of recipes and generates an
 new generation of offspring recipes based on the previous generation
 (breeding_pool).
