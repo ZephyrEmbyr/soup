@@ -156,8 +156,8 @@ ng a subset from each parent based on their respective pivot point.
 """
 #TODO: rename vars to make type clear
 def cross_over(recipe1, recipe2):
-    print("recipe1:", recipe1)
-    print("recipe2:", recipe2)
+    # print("recipe1:", recipe1)
+    # print("recipe2:", recipe2)
     pivot1 = rand.randint(0, len(recipe1.ingredients) - 1)      # creating random pivot indices
     pivot2 = rand.randint(0, len(recipe2.ingredients) - 1)      # for both recipe strings
     #
@@ -181,14 +181,15 @@ def cross_over(recipe1, recipe2):
 
 
 recipes = read_files("input")
+recipes = sorted(recipes, key= lambda Recipe: len(Recipe.ingredients), reverse=True)
+new_recipes = produce_new_generation(recipes)
+new_recipes = sorted(new_recipes, key = lambda Recipe: len(Recipe.ingredients), reverse = True)
 
-recipes = produce_new_generation(recipes)
 
-#NOTE: checked methods in recipe and amount; all should be ready for use
 #
-counter = 0
-for recipe in recipes:
-    counter = counter + 1
-    print("recipe", counter)
-    print(recipe)
-    print()
+# counter = 0
+# for recipe in recipes:
+#     counter = counter + 1
+#     print("recipe", counter)
+#     print(recipe)
+#     print()
