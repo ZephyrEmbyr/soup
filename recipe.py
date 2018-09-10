@@ -51,3 +51,7 @@ class Recipe:
         for ingredient in self.ingredients:
             temp = temp + str(ingredient) + "\n"
         return temp;
+
+    def add_elements_to_ingredients(self, new_arr):
+        self.ingredients.append(new_arr)
+        return
