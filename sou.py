@@ -34,17 +34,51 @@ aesthetic filter of recipe size.
 """
 def selection_probability_array(breeding_pool):
     probs_array = []
-    num_ingredients = 0
     accum = 0
-    for x in range(breeding_pool):
-        num_ingredients += len(breeding_pool[x.ingredients])
 
-    for x in range(breeding_pool):
-        accum += len(breeding_pool[x.ingredients])
+    for x in breeding_pool:
+        accum += len(x.ingredients)
         probs_array.append(accum)
 
     return probs_array
 
+
+"""
+The find_probs_array_index function will carry out a binary search on
+the probs_array to find the index where accum can be found. Accum will be less
+than or equal to the indexed probability.
+    Inputs:
+        accum -> a number
+        probs_array -> an array of accumulative probabilities
+    Output:
+        an index number
+
+def find_probs_array_index(accum, probs_array):
+    half_way = (len(probs_array) - 1) // 2
+    # when only one item left, item is accum
+    # return index
+    if len(probs_array) == 1:
+        return 0
+    # when accum is greater than half_way item, recursively check right of half_way
+    # return recursive index + half_way index + 1
+    elif accum > probs_array[half_way]:
+        return half_way + 1 + find_probs_array_index(accum,
+               probs_array[half_way + 1 : len(probs_array)])
+    # when accum is less than half_way item, recursively check left of half_way inclusive
+    # return recursive index without modification
+    else:
+        return find_probs_array_index(accum,
+               probs_array[0 : half_way + 1])
+"""
+
+"""
+Find the index accum in a probs_array.
+"""
+def find_probs_array_index(accum, probs_array):
+    for i in range(len(probs_array)):
+        if accum <= probs_array[i]:
+            return i
+    return none
 
 """
 The produce_new_generation function takes an array of recipes and an array of
@@ -56,6 +90,41 @@ offspring recipes.
     Output:
         new_generation -> the array of offspring recipes
 """
+def produce_new_generation(breeding_pool):
+    probs_array = selection_probability_array(breeding_pool)
+    pool_size = len(breeding_pool)
+    max_accum = probs_array[len(probs_array) - 1]
+    new_generation = []
+    iter = pool_size
+    while iter > 0:
+
+        # generate random number
+        accum1 = rand.randint(0, max_accum) # the first probability for selection
+        accum2 = rand.randint(0, max_accum) # the second probability for selection
+
+        # find parents from accums using
+        # print("parent1:", find_probs_array_index(accum1, probs_array))
+        # print("parent2:", find_probs_array_index(accum2, probs_array))
+        # print(len(breeding_pool))
+        parent1 = Recipe(breeding_pool[find_probs_array_index(accum1, probs_array)].ingredients)
+        parent2 = Recipe(breeding_pool[find_probs_array_index(accum2, probs_array)].ingredients)
+
+        # add parents to new generation
+        new_generation.append(cross_over(parent1, parent2))
+        iter = iter - 1
+
+    return new_generation
+
+"""
+The produce_new_generation function takes an array of recipes and an array of
+each recipe's probability of being selected to generate a new generation of
+offspring recipes.
+    Input:
+        breeding_pool -> the array of parent recipes
+        probs_array -> the array of probabilities
+    Output:
+        new_generation -> the array of offspring recipes
+
 def produce_new_generation(breeding_pool, probs_array):
     pool_size = len(breeding_pool)
     new_generation = []
@@ -71,6 +140,7 @@ def produce_new_generation(breeding_pool, probs_array):
         iter = iter - 1
 
     return new_generation
+"""
 
 
 
@@ -83,20 +153,41 @@ ng a subset from each parent bsed on their respective pivot point.
         recipe2 -> the second parent recipe
     Output:
         crossed_recipe -> the child recipe
+
 """
+#TODO: rename vars to make type clear
 def cross_over(recipe1, recipe2):
-    pivot1 = rand.randInt(1, len(recipe1)-1)      # creating random pivot indices
-    pivot2 = rand.randInt(1, len(recipe2)-1)      # for both recipe strings
+    print("recipe1:", recipe1)
+    print("recipe2:", recipe2)
+    pivot1 = rand.randint(0, len(recipe1.ingredients) - 1)      # creating random pivot indices
+    pivot2 = rand.randint(0, len(recipe2.ingredients) - 1)      # for both recipe strings
+    #
+    # print("pivot1:", pivot1, "pivot2:", pivot2)
+    # print("part1:", recipe1.ingredients[0 : pivot1], "part2:",  recipe2.ingredients[pivot2 : len(recipe2.ingredients) - 1])
 
-    if rand.randInt() % 2 == 0:                 # if it's even then we merge left
-        crossed_recipe = recipe1[1:pivot1].append(# subset of recipe 1 with the right
-        recipe2[pivot2:len(recipe2) - 1])       # subset of recipe 2 based on their pivots
+    final_recipe = Recipe([])
+
+    if True:
+    # if rand.randint(1, 50) % 2 == 0:                            # if it's even then we merge left
+        final_recipe.add_elements_to_ingredients(recipe1.ingredients[0 : pivot1])
+        final_recipe.add_elements_to_ingredients(recipe2.ingredients[pivot2 : len(recipe2.ingredients) - 1])
     else:
-        crossed_recipe = recipe2[1:pivot2].append(# left subset of recipe 2 with
-        recipe1[pivot1:len(recipe1) - 1])       # the right subset of recipe 1
-
-        return crossed_recipe                             # we return the new crossover array
+        final_recipe.add_elements_to_ingredients(recipe2.ingredients[0 : pivot2])
+        final_recipe.add_elements_to_ingredients(recipe1.ingredients[pivot1 : len(recipe1.ingredients) - 1])
+    # print("crossed recipe:", crossed_recipe)
+    # print()
+    final_recipe = Recipe(crossed_recipe)
+    print(final_recipe)
+    return final_recipe                                  # we return the new crossover array
 
 
 
 recipes = read_files("input")
+
+recipes = produce_new_generation(recipes)
+
+#NOTE: checked methods in recipe and amount; all should be ready for use
+#
+# for recipe in recipes:
+#     print(recipe)
+#     print()
