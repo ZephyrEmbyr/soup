@@ -1,4 +1,6 @@
 import random
+from Ingredient import *
+from Amount import *
 
 
 class Recipe:
@@ -29,29 +31,53 @@ class Recipe:
 
 
     # set weight to 100 oz
-    def normalize_weights(self):
-        oz_counter = 0
+    # def normalize_weights(self):
+    #     oz_counter = 0
+    #
+    #     for ingredient in self.ingredients:
+    #         oz_counter += ingredient.amount.quantity
+    #
+    #     scale = 100 / oz_counter
+    #
+    #     new_total_weight = 0
+    #     for ingredient in self.ingredients:
+    #         prev_quantity = ingredient.amount.quantity
+    #         self.ingredients.amount.replace_quantity(scale * prev_quantity)
+    #         new_total_weight += scale * prev_quantity
+    #
+    #     if new_total_weight == 100:
+    #         print('Success!')
 
+    def combine_duplicate_ingredients(self):
+        ingredients_dict = {}
         for ingredient in self.ingredients:
-            oz_counter += ingredient.amount.get_quantity
+            # ingredient_dict[ingredient.name] = (ingredient_dict.get(ingredient.name, 0) + ingredient.amount.quantity)
+            if ingredient in ingredients_dict:
+                ingredients_dict[ingredient.name] += ingredient.amount.quantity
+            else:
+                ingredients_dict[ingredient.name] = ingredient.amount.quantity
+        ingredient_arr = []
+        for key in ingredients_dict:
+            ingredient_arr.append(Ingredient(key, Amount(ingredients_dict[key], "oz")))
+        self.ingredients = ingredient_arr
 
-        scale = 100 / oz_counter
+    def add_elements_to_ingredients(self, new_arr):
+        self.ingredients = self.ingredients + new_arr
+        return
 
-        new_total_weight = 0
+    def scale_to_100(self):
+        total = 0
         for ingredient in self.ingredients:
-            prev_quantity = ingredient.amount.get_quantity
-            self.ingredients.amount.replace_quantity(scale * prev_quantity)
-            new_total_weight += scale * prev_quantity
+            total = total + ingredient.amount.quantity
+        scale_factor = 100 / total
+        for k in range(len(self.ingredients)):
+            self.ingredients[k].amount.quantity = self.ingredients[k].amount.quantity * scale_factor
 
-        if new_total_weight == 100:
-            print('Success!')
+
+
 
     def __str__(self):
         temp = ""
         for ingredient in self.ingredients:
             temp = temp + str(ingredient) + "\n"
         return temp;
-
-    def add_elements_to_ingredients(self, new_arr):
-        self.ingredients.append(new_arr)
-        return

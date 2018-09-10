@@ -147,13 +147,12 @@ def produce_new_generation(breeding_pool, probs_array):
 """
 The cross_over function takes two recipes and generates an offspring. The offspring
 is created by picking random a pivot point in each parent and then randomly combini-
-ng a subset from each parent bsed on their respective pivot point.
+ng a subset from each parent based on their respective pivot point.
     Inputs:
         recipe1 -> the first parent recipe
         recipe2 -> the second parent recipe
     Output:
         crossed_recipe -> the child recipe
-
 """
 #TODO: rename vars to make type clear
 def cross_over(recipe1, recipe2):
@@ -174,10 +173,9 @@ def cross_over(recipe1, recipe2):
     else:
         final_recipe.add_elements_to_ingredients(recipe2.ingredients[0 : pivot2])
         final_recipe.add_elements_to_ingredients(recipe1.ingredients[pivot1 : len(recipe1.ingredients) - 1])
-    # print("crossed recipe:", crossed_recipe)
-    # print()
-    final_recipe = Recipe(crossed_recipe)
-    print(final_recipe)
+
+    final_recipe.combine_duplicate_ingredients()
+    final_recipe.scale_to_100()
     return final_recipe                                  # we return the new crossover array
 
 
@@ -188,6 +186,9 @@ recipes = produce_new_generation(recipes)
 
 #NOTE: checked methods in recipe and amount; all should be ready for use
 #
-# for recipe in recipes:
-#     print(recipe)
-#     print()
+counter = 0
+for recipe in recipes:
+    counter = counter + 1
+    print("recipe", counter)
+    print(recipe)
+    print()
