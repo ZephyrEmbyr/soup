@@ -5,6 +5,8 @@ from Amount import *
 from recipe import *
 from Ingredient import *
 
+inspiring_ingredients = {}
+
 
 
 def read_files(folder):
@@ -19,7 +21,9 @@ def read_files(folder):
                 line_split[2] = line_split[2][:-1]
                 amount_temp = Amount(float(line_split[0]),line_split[1])
                 ingredient_temp.append(Ingredient(line_split[2],amount_temp))
+                inspiring_ingredients[line_split[2]] = 1 #creating the inspiring set list of all possible ingredients
             recipe_temp = Recipe(ingredient_temp)
+            recipe_temp.name_recipe()
             return_recipes.append(recipe_temp)
     return return_recipes
 
@@ -166,19 +170,75 @@ def cross_over(recipe1, recipe2):
 
     final_recipe = Recipe([])
 
-    if True:
-    # if rand.randint(1, 50) % 2 == 0:                            # if it's even then we merge left
+    if rand.randint(1,3)%2 == 0:                   # if it's even then we merge left
         final_recipe.add_elements_to_ingredients(recipe1.ingredients[0 : pivot1])
         final_recipe.add_elements_to_ingredients(recipe2.ingredients[pivot2 : len(recipe2.ingredients) - 1])
     else:
         final_recipe.add_elements_to_ingredients(recipe2.ingredients[0 : pivot2])
         final_recipe.add_elements_to_ingredients(recipe1.ingredients[pivot1 : len(recipe1.ingredients) - 1])
 
+    mutation = rand.randint(1,1000)
+    if(mutation > 20):
+        pass
+    elif(mutation > 15):
+        add_ingredient(final_recipe)
+    elif(mutation > 10):
+        delete_ingredient(final_recipe)
+    elif(mutation > 5):
+        change_ingredient(final_recipe)
+    else:
+        change_amount(final_recipe)
+
+
     final_recipe.combine_duplicate_ingredients()
     final_recipe.scale_to_100()
+    final_recipe.name_recipe()
     return final_recipe                                  # we return the new crossover array
 
+"""
+These next four functions are used for the possible mutations
+that can be applied if a mutation occurs
 
+add_ingredient adds a random ingredient (w/ a random amount between 1-10 units)
+from the inspiring set to a recipe
+
+delete_ingredient deletes a random ingredient from a recipe
+
+change_ingredient changes the name of an ingredient in a recipe to that of
+another ingredient in the inspiring set
+
+change_amount selects an ingredient from the recipe and changes the amount to be
+anywhere from 1-30 units
+"""
+def add_ingredient(recipe):
+    random_ingredient = random.choice(list(inspiring_ingredients))
+    new_ingredient = Ingredient(random_ingredient, Amount(rand.randint(1,10),"oz"))
+    recipe.add_elements_to_ingredients([new_ingredient])
+    return recipe
+
+def delete_ingredient(recipe):
+    recipe.delete_random_ingredient()
+    return recipe
+
+
+def change_ingredient(recipe):
+    random_ingredient = random.choice(list(inspiring_ingredients))
+    recipe.change_random_ingredient(random_ingredient)
+    return recipe
+
+def change_amount(recipe):
+    recipe.scale_random_ingredient_amount(rand.randint(1,30))
+    return recipe
+
+'''
+Start of the main method:
+ - reads in the inspiring set of new_recipes and sorts it by fitness
+ - creates a new generation of recipes and sorts it by fitness
+ - take the first half of old and new recipes to get most fit 50% from each
+ - repeat for n iterations based on user input
+'''
+
+num_iterations = input("number of iterations: ")
 
 recipes = read_files("input")
 recipes = sorted(recipes, key= lambda Recipe: len(Recipe.ingredients), reverse=True)
@@ -186,10 +246,21 @@ new_recipes = produce_new_generation(recipes)
 new_recipes = sorted(new_recipes, key = lambda Recipe: len(Recipe.ingredients), reverse = True)
 
 
-#
-# counter = 0
-# for recipe in recipes:
-#     counter = counter + 1
-#     print("recipe", counter)
-#     print(recipe)
-#     print()
+'''
+
+'''
+next_generation_recipes = recipes[0:int(len(recipes)/2)] + new_recipes[0:int(len(new_recipes)/2)]
+next_generation_recipes = sorted(next_generation_recipes, key= lambda Recipe: len(Recipe.ingredients), reverse=True)
+
+for k in range(int(num_iterations)-1):
+
+    new_recipes = produce_new_generation(recipes)
+    new_recipes = sorted(new_recipes, key = lambda Recipe: len(Recipe.ingredients), reverse = True)
+    next_generation_recipes = recipes[0:int(len(recipes)/2)] + new_recipes[0:int(len(new_recipes)/2)]
+    next_generation_recipes = sorted(next_generation_recipes, key= lambda Recipe: len(Recipe.ingredients), reverse=True)
+
+counter = 0
+for recipe in next_generation_recipes:
+    counter = counter + 1
+    print("recipe #" + str(counter) + ":", recipe.name)
+    print(recipe)

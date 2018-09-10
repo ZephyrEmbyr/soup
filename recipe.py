@@ -6,47 +6,48 @@ from Amount import *
 class Recipe:
     def __init__(self, ingredients):
         self.ingredients = ingredients
+        self.name = ""
 
     # pick a random ingredient and change the amount of that ingredient by a given scale
     def scale_random_ingredient_amount(self, change_factor):
-        length = self.ingredients.len()
-
-        random_index = random.randint(0, length-1)
+        length = len(self.ingredients)
+        if len(self.ingredients) == 0:
+            return;
+        elif len(self.ingredients) <= 1:
+            random_index = 0
+        else:
+            random_index = random.randint(0, length-1)
 
         curr_quantity = self.ingredients[random_index].amount.quantity
 
-        self.ingredients[random_index].amount.replaceQuantity(curr_quantity * change_factor)
+        self.ingredients[random_index].amount.replace_quantity(curr_quantity * change_factor)
 
         return curr_quantity * change_factor
 
     # delete a random ingredient, return void
     def delete_random_ingredient(self):
-        length = self.ingredients.len()
-
-        random_index = random.randint(0, length-1)
+        length = len(self.ingredients)
+        if len(self.ingredients) == 0:
+            return
+        if len(self.ingredients) <= 1:
+            random_index = 0
+        else:
+            random_index = random.randint(0, length-1)
 
         del self.ingredients[random_index]
 
         return
 
+    def change_random_ingredient(self, new_name):
+        if len(self.ingredients) == 0:
+            return
+        if len(self.ingredients) <= 1:
+            random_index = 0
+        else:
+            random_index = random.randint(0,len(self.ingredients)-1)
+        temp = self.ingredients[random_index]
+        self.ingredients[random_index] = Ingredient(new_name, temp.amount)
 
-    # set weight to 100 oz
-    # def normalize_weights(self):
-    #     oz_counter = 0
-    #
-    #     for ingredient in self.ingredients:
-    #         oz_counter += ingredient.amount.quantity
-    #
-    #     scale = 100 / oz_counter
-    #
-    #     new_total_weight = 0
-    #     for ingredient in self.ingredients:
-    #         prev_quantity = ingredient.amount.quantity
-    #         self.ingredients.amount.replace_quantity(scale * prev_quantity)
-    #         new_total_weight += scale * prev_quantity
-    #
-    #     if new_total_weight == 100:
-    #         print('Success!')
 
     def combine_duplicate_ingredients(self):
         ingredients_dict = {}
@@ -69,11 +70,35 @@ class Recipe:
         total = 0
         for ingredient in self.ingredients:
             total = total + ingredient.amount.quantity
+        if(total == 0):
+            return
         scale_factor = 100 / total
         for k in range(len(self.ingredients)):
             self.ingredients[k].amount.quantity = self.ingredients[k].amount.quantity * scale_factor
 
+    def name_recipe(self):
+        if len(self.ingredients) == 0:
+            return "null soup"
+        elif len(self.ingredients) == 1:
+            return self.ingredients[0].name + " soup"
+        else:
+            arr = self.ingredients
+            arr = sorted(arr, key = lambda Ingredient: Ingredient.amount.quantity, reverse = True)
+            name = ""
+            randint = random.randint(1, 100)
+            if randint % 4 == 0:
+                name = self.ingredients[0].name + "-y " + self.ingredients[1].name + " soup"
+            elif randint % 4 == 1:
+                name = "Tasty " + self.ingredients[0].name + " and " + self.ingredients[1].name + " soup"
+            elif randint % 4 == 2:
+                name = "Super " + self.ingredients[0].name + "-y " + self.ingredients[1].name + " soup"
+            else:
+                name = "Momma's " + self.ingredients[0].name + " and " + self.ingredients[1].name + " soup"
 
+            self.name = name
+            #select the top 2 (first 2) elements from arr -> create name
+            #given x, y y-ey x soup
+            #tomato, onion -> tomatoey onion soup
 
 
     def __str__(self):
