@@ -1,3 +1,5 @@
+"""Class ingredient contains a String
+name and an amount amount"""
 class Ingredient:
     def __init__(self, name, amount):
         self.name = name

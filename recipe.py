@@ -2,7 +2,8 @@ import random
 from Ingredient import *
 from Amount import *
 
-
+"""Class recipe contains a name and a list of ingredients
+"""
 class Recipe:
     def __init__(self, ingredients):
         self.ingredients = ingredients
@@ -38,6 +39,7 @@ class Recipe:
 
         return
 
+    # change a random ingredient to a new ingred. w/ same amount
     def change_random_ingredient(self, new_name):
         if len(self.ingredients) == 0:
             return
@@ -49,10 +51,10 @@ class Recipe:
         self.ingredients[random_index] = Ingredient(new_name, temp.amount)
 
 
+    # use a dict to combine any duplicates thru recomb. into a single ingredient
     def combine_duplicate_ingredients(self):
         ingredients_dict = {}
         for ingredient in self.ingredients:
-            # ingredient_dict[ingredient.name] = (ingredient_dict.get(ingredient.name, 0) + ingredient.amount.quantity)
             if ingredient in ingredients_dict:
                 ingredients_dict[ingredient.name] += ingredient.amount.quantity
             else:
@@ -62,10 +64,12 @@ class Recipe:
             ingredient_arr.append(Ingredient(key, Amount(ingredients_dict[key], "oz")))
         self.ingredients = ingredient_arr
 
+    # add new elements to the ingredients class field
     def add_elements_to_ingredients(self, new_arr):
         self.ingredients = self.ingredients + new_arr
         return
 
+    # scale recipe's ingredients so their weights add to 100 oz
     def scale_to_100(self):
         total = 0
         for ingredient in self.ingredients:
@@ -96,11 +100,11 @@ class Recipe:
                 name = "Momma's " + self.ingredients[0].name + " and " + self.ingredients[1].name + " soup"
 
             self.name = name
-            #select the top 2 (first 2) elements from arr -> create name
-            #given x, y y-ey x soup
-            #tomato, onion -> tomatoey onion soup
+            # select the top 2 (first 2) elements from arr -> create name
+            # given x, y y-ey x soup
+            # tomato, onion -> tomatoey onion soup
 
-
+    # to string
     def __str__(self):
         temp = ""
         for ingredient in self.ingredients:
